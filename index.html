@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Old Man Yells!</title>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
     <div class="center">
-      <img src="oldman.jpg" alt="Old Man Yells at Cloud!">
+      <div class="media" role="button" tabindex="0" aria-label="Play Old Man yells video">
+        <video src="oldman.mp4" preload="metadata" playsinline poster="oldman.jpg"></video>
+      </div>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.media');
+        if (!container) {
+          return;
+        }
+
+        const video = container.querySelector('video');
+
+        const playFromStart = () => {
+          video.currentTime = 0;
+          const playPromise = video.play();
+          if (playPromise && typeof playPromise.then === 'function') {
+            playPromise.catch((error) => {
+              console.warn('Video playback blocked until user interaction.', error);
+            });
+          }
+        };
+
+        container.addEventListener('click', () => {
+          if (video.paused || video.ended) {
+            playFromStart();
+          }
+        });
+
+        container.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            if (video.paused || video.ended) {
+              playFromStart();
+            }
+          }
+        });
+      });
+    </script>
   </body>
 </html>

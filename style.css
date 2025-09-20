@@ -9,6 +9,18 @@ body {
   height: 100vh;
 }
 
-img {
+.media {
+  cursor: pointer;
+  max-width: min(90vw, 640px);
+}
+
+.media:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 6px;
+}
+
+.media video {
   max-width: 100%;
+  display: block;
+  cursor: inherit;
 }
